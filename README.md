@@ -12,6 +12,7 @@ A practical, hands-on repository demonstrating LangChain and LangSmith capabilit
 | [`2_sequential_chain.py`](file:///c:/D_Drive/Python%20Projects/langsmith/2_sequential_chain.py) | Two-step sequential chain: generates a detailed report on a topic and then produces a 5-point summary. |
 | [`3_rag_v1_notracing.py`](file:///c:/D_Drive/Python%20Projects/langsmith/3_rag_v1_notracing.py) | RAG pipeline over a PDF document using FAISS vector store, OpenAI embeddings, and LCEL parallel runnables. |
 | [`3_rag_v2.py`](file:///c:/D_Drive/Python%20Projects/langsmith/3_rag_v2.py) | RAG pipeline with custom LangSmith `@traceable` annotations for tracking document loading, splitting, vector store building, and custom run naming. |
+| [`3_rag_v3.py`](file:///c:/D_Drive/Python%20Projects/langsmith/3_rag_v3.py) | RAG pipeline demonstrating run nesting, custom tagging (`tags=["setup"]`), and wrapping the entire setup and query flow inside a traceable run. |
 
 ---
 
@@ -82,7 +83,13 @@ Enhances the RAG pipeline using LangSmith's `@traceable` decorator to log non-La
 ```bash
 python 3_rag_v2.py
 ```
-> **Note**: Make sure to place your target PDF (e.g. `introtoml.pdf`) in the project directory before running either of the RAG scripts.
+
+### 5. RAG Pipeline with Nesting and Tagging
+Demonstrates run nesting (wrapping setup and query flows inside a parent traceable run `pdf_rag_full_run`) and applying custom tags (such as `tags=["setup"]`) for run categorisation and filtering in LangSmith.
+```bash
+python 3_rag_v3.py
+```
+> **Note**: Make sure to place your target PDF (e.g. `introtoml.pdf`) in the project directory before running any of the RAG scripts.
 
 ---
 
@@ -92,3 +99,4 @@ python 3_rag_v2.py
 - **RAG Debugging**: Trace document retrieval, context formatting, and grounded LLM answers.
 - **Custom Python Tracing (`@traceable`)**: Instrument custom/standalone Python functions (e.g., document loading, splitting, and vector database building) to see them in the trace tree.
 - **Run Custom Naming & Metadata**: Set custom names for LCEL runs using the configuration object (e.g., `run_name: pdf_rag_query`).
+- **Run Nesting & Tagging**: Nest multiple custom traced runs inside a parent run (`pdf_rag_full_run`) and add custom tags (`tags=["setup"]`) to filter runs easily.
