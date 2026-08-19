@@ -11,6 +11,7 @@ A practical, hands-on repository demonstrating LangChain and LangSmith capabilit
 | [`1_simple_llm_call.py`](file:///c:/D_Drive/Python%20Projects/langsmith/1_simple_llm_call.py) | Basic LLM call using LCEL (`PromptTemplate | ChatOpenAI | StrOutputParser`). |
 | [`2_sequential_chain.py`](file:///c:/D_Drive/Python%20Projects/langsmith/2_sequential_chain.py) | Two-step sequential chain: generates a detailed report on a topic and then produces a 5-point summary. |
 | [`3_rag_v1_notracing.py`](file:///c:/D_Drive/Python%20Projects/langsmith/3_rag_v1_notracing.py) | RAG pipeline over a PDF document using FAISS vector store, OpenAI embeddings, and LCEL parallel runnables. |
+| [`3_rag_v2.py`](file:///c:/D_Drive/Python%20Projects/langsmith/3_rag_v2.py) | RAG pipeline with custom LangSmith `@traceable` annotations for tracking document loading, splitting, vector store building, and custom run naming. |
 
 ---
 
@@ -75,7 +76,13 @@ Loads a PDF document (e.g., `introtoml.pdf`), chunks it, embeds with `text-embed
 ```bash
 python 3_rag_v1_notracing.py
 ```
-> **Note**: Make sure to place your target PDF (e.g. `introtoml.pdf`) in the project directory before running the RAG script.
+
+### 4. RAG Pipeline with Custom Tracing
+Enhances the RAG pipeline using LangSmith's `@traceable` decorator to log non-LangChain steps (PDF loading, document splitting, and vector database building) and sets custom run names.
+```bash
+python 3_rag_v2.py
+```
+> **Note**: Make sure to place your target PDF (e.g. `introtoml.pdf`) in the project directory before running either of the RAG scripts.
 
 ---
 
@@ -83,3 +90,5 @@ python 3_rag_v1_notracing.py
 - **LLM Run Tracing & Observability**: Inspect prompts, token usage, latency, and intermediate outputs.
 - **LCEL Chain Debugging**: Detailed visibility into sequential steps and parallel runnables (`RunnableParallel`, `RunnablePassthrough`, `RunnableLambda`).
 - **RAG Debugging**: Trace document retrieval, context formatting, and grounded LLM answers.
+- **Custom Python Tracing (`@traceable`)**: Instrument custom/standalone Python functions (e.g., document loading, splitting, and vector database building) to see them in the trace tree.
+- **Run Custom Naming & Metadata**: Set custom names for LCEL runs using the configuration object (e.g., `run_name: pdf_rag_query`).
