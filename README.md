@@ -13,6 +13,7 @@ A practical, hands-on repository demonstrating LangChain and LangSmith capabilit
 | [`3_rag_v1_notracing.py`](file:///c:/D_Drive/Python%20Projects/langsmith/3_rag_v1_notracing.py) | RAG pipeline over a PDF document using FAISS vector store, OpenAI embeddings, and LCEL parallel runnables. |
 | [`3_rag_v2.py`](file:///c:/D_Drive/Python%20Projects/langsmith/3_rag_v2.py) | RAG pipeline with custom LangSmith `@traceable` annotations for tracking document loading, splitting, vector store building, and custom run naming. |
 | [`3_rag_v3.py`](file:///c:/D_Drive/Python%20Projects/langsmith/3_rag_v3.py) | RAG pipeline demonstrating run nesting, custom tagging (`tags=["setup"]`), and wrapping the entire setup and query flow inside a traceable run. |
+| [`3_rag_v4.py`](file:///c:/D_Drive/Python%20Projects/langsmith/3_rag_v4.py) | Advanced RAG pipeline with local index persistence and caching. Uses file fingerprinting and config hashing to skip rebuilds, demonstrating conditional trace paths (`load_index` vs `build_index`) in LangSmith. |
 
 ---
 
@@ -89,6 +90,13 @@ Demonstrates run nesting (wrapping setup and query flows inside a parent traceab
 ```bash
 python 3_rag_v3.py
 ```
+
+### 6. RAG Pipeline with Index Caching & Local Persistence
+Demonstrates locally caching and loading the FAISS vector database based on PDF file fingerprints (SHA-256, size, mtime) and indexing configurations (chunk size, overlap, embedding model). Conditionally routes traces to either `load_index_run` or `build_index_run` in LangSmith depending on cache status.
+```bash
+python 3_rag_v4.py
+```
+
 > **Note**: Make sure to place your target PDF (e.g. `introtoml.pdf`) in the project directory before running any of the RAG scripts.
 
 ---
@@ -100,3 +108,4 @@ python 3_rag_v3.py
 - **Custom Python Tracing (`@traceable`)**: Instrument custom/standalone Python functions (e.g., document loading, splitting, and vector database building) to see them in the trace tree.
 - **Run Custom Naming & Metadata**: Set custom names for LCEL runs using the configuration object (e.g., `run_name: pdf_rag_query`).
 - **Run Nesting & Tagging**: Nest multiple custom traced runs inside a parent run (`pdf_rag_full_run`) and add custom tags (`tags=["setup"]`) to filter runs easily.
+- **Conditional Branch Tracing**: Observe separate conditional paths (e.g., loading from vs. building an index) traced in real time, keeping your trace histories accurate to the code paths actually executed.
